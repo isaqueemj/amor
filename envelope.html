@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carta de Amor</title>
+<style>
+  body {
+    background-color: #ffdce1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  #card {
+    width: 300px;
+    height: 300px;
+    background-color: #ff8fa3;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  #card img {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 15px;
+    object-fit: contain;
+  }
+  #message {
+    margin-top: 15px;
+    color: #800000;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+  }
+  .buttons {
+    margin-top: 20px;
+  }
+  button {
+    background-color: #ff8fa3;
+    border: 2px solid #d65a6e;
+    color: #800000;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #d65a6e;
+    color: white;
+  }
+
+  /* Estilo para corações animados */
+  .heart {
+    position: absolute;
+    bottom: 20px;
+    font-size: 24px;
+    color: #e60039;
+    animation: rise 2s ease forwards;
+    opacity: 0.8;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  @keyframes rise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-150px) scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="card" title="Clique para abrir/fechar a carta">
+  <span style="font-size: 100px;">📩</span>
+</div>
+
+<div class="buttons">
+  <button id="openBtn">OPEN</button>
+  <button id="resetBtn">RESET</button>
+</div>
+
+<script>
+  const card = document.getElementById('card');
+  const openBtn = document.getElementById('openBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  // Sua imagem enviada
+  const openImage = '/mnt/data/9ec3aea7-1a04-4483-bbef-e1f3f8d3df37.png';
+
+  function criarCoracao() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent = '❤️';
+
+    // posição horizontal aleatória dentro do card
+    heart.style.left = Math.random() * (card.clientWidth - 30) + 'px';
+
+    card.appendChild(heart);
+
+    // Remove o coração após animação
+    setTimeout(() => {
+      heart.remove();
+    }, 2000);
+  }
+
+  function abrirCarta() {
+    card.innerHTML = `
+      <div id="message">Você é o meu amor, minha luz e meu tudo! ❤️</div>
+    `;
+
+    // Criar vários corações animados
+    for (let i = 0; i < 10; i++) {
+      setTimeout(criarCoracao, i * 200);
+    }
+  }
+
+  function resetarCarta() {
+    card.innerHTML = `<span style="font-size: 100px;">📩</span>`;
+  }
+
+  openBtn.addEventListener('click', abrirCarta);
+  resetBtn.addEventListener('click', resetarCarta);
+
+  // Clicar na carta abre/fecha
+  card.addEventListener('click', () => {
+    if(card.querySelector('img')) {
+      resetarCarta();
+    } else {
+      abrirCarta();
+    }
+  });
+</script>
+
+</body>
+</html>
